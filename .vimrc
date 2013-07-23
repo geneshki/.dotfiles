@@ -1,5 +1,5 @@
 " enable vim-pathogen
-runtime bundle/vim-pathogen-master/autoload/pathogen.vim
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
@@ -19,8 +19,9 @@ set background=dark
 set t_Co=256
 
 " Set color scheme:
-colorscheme distinguished
-" colorscheme wombat
+" colorscheme distinguished
+colorscheme wombat256
+" colorscheme BlackSea
 
 " set line numbers on
 set number 
