@@ -7,4 +7,7 @@ cat $currentDir/config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ 
   echo cloning from $line;
   git clone $line;
 done
+
+cd ../
+ln -s .dotfiles/.vimrc
 #echo Config SUCCESSFUL!

@@ -10,3 +10,6 @@ The config.sh downloads every git repository that is listed in the config.proper
 file. The destination folder is cited also in config.properties.
 
 I am using this files to download pathogen and then all the plugins I need and use.
+
+For vim configuration independence, the vim-addon-local-vimrc is downloaded and
+a symlink is created to the parent directory.
