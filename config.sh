@@ -5,17 +5,24 @@ destinationIsAbsolute=$( cat config.properties | set -e '\_#.*_ d' -e 's/[ ^I]*$
 destination=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +2 |head -n 1);
 if [ "$destinationIsAbsolute" != "true" ]
 then
- destination="$HOME$destination"
+  destination="$HOME$destination"
 fi
 echo bundle directory path: $destination;
+workingDirIsAbsolute=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +3 |head -n 1);
+workingDir=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +4 |head -n 1);
 cd $destination;
 set +e; # don't exit on error. This way even if plugins are downloaded or there's another error,
         # the rest of the plugins would be cloned.
-cat $currentDir/config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +3 | while read line; do 
+cat $currentDir/config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +5 | while read line; do 
   echo cloning from $line;
   git clone $line;
 done
 
-cd ../
-ln -s $currentDir/.vimrc
+if [ "$workingDirIsAbsolute" != "true" ]
+then
+  workingDir="$HOME$workingDir";
+fi
+echo working directory path: $workingDir;
+cd $workingDir;
+ln -s $currentDir/.vimrc;
 #echo Config SUCCESSFUL!
