@@ -26,3 +26,4 @@ echo working directory path: $workingDir;
 cd $workingDir;
 ln -s $currentDir/.vimrc;
 #echo Config SUCCESSFUL!
+exit
