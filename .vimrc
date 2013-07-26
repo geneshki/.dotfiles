@@ -25,3 +25,13 @@ colorscheme wombat256
 
 " set line numbers on
 set number 
+
+" set width of a tab symbol
+set tabstop=2
+" set number of columns a text is indented with '>>' and '<<'
+set shiftwidth=2
+" use spaces instead of tabs
+set expandtab
+
+" set textwidth for battling long lines maybe?
+set textwidth=80
