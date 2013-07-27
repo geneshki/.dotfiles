@@ -35,3 +35,8 @@ set expandtab
 
 " set textwidth for battling long lines maybe?
 set textwidth=80
+
+" set ColorColumn to designate special columns.
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+" set 80th and over 120th columns background. 
+let &colorcolumn="80,".join(range(120,999),",")
