@@ -11,6 +11,16 @@ echo bundle directory path: $destination;
 workingDirIsAbsolute=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +3 |head -n 1);
 workingDir=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +4 |head -n 1);
 cd $destination;
+# write the names of the present plugins to a file.
+dirnamearr=( */ );
+cd -;
+if [ ! -e localPlugins.properties ]; then
+  for user in "${dirnamearr[@]%*/}"; do
+    echo $user >> localPlugins.properties;
+  done
+fi
+cd -;
+
 set +e; # don't exit on error. This way even if plugins are downloaded or there's another error,
         # the rest of the plugins would be cloned.
 cat $currentDir/config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +5 | while read line; do 
