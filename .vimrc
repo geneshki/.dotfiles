@@ -36,8 +36,11 @@ set expandtab
 set smartindent
 set autoindent
 
-" set textwidth for battling long lines maybe?
-set textwidth=80
+" set textwidth and wrapmargin for battling unwanted wrapping which makes lines long.
+set textwidth=0
+set wrapmargin=0
+" set textwidth=80 this cuts the line before the word that exceeds the Xth
+" char as shown in this comment.
 
 " set ColorColumn to designate special columns.
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
@@ -60,9 +63,10 @@ highlight SpecialKey guifg=#4a4a59
 
 " Use the same symbols as TextMate for tabstops and EOLs
 " as TextMate for tabstops and EOLs
-set listchars=eol:¬,tab:>-,trail:~,extends:>,precedes:<
+set listchars=eol:¬,tab:>-,trail:~
 
 " toggle list option
 nnoremap <leader>l :set list!<cr>
 
-
+set statusline+=[%{&fo}]
+set fo-=c
