@@ -10,6 +10,9 @@ fi
 echo bundle directory path: $destination;
 workingDirIsAbsolute=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +3 | head -n 1);
 workingDir=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +4 | head -n 1);
+if [ "$workingDirIsAbsolute" != "true" ]; then
+  workingDir="$HOME$workingDir";
+fi
 # get the name of the filetype plugin
 ftpluginName=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +5 | head -n 1);
 echo $ftpluginName
@@ -46,10 +49,6 @@ if [ $# -eq 0 ]; then # save initial state of the config and perform configurati
   # create symlink to the filetype configuration
   ln -s $currentDir/$ftpluginName;
 
-  if [ "$workingDirIsAbsolute" != "true" ]
-  then
-    workingDir="$HOME$workingDir";
-  fi
   echo working directory path: $workingDir;
   cd $workingDir;
   ln -s $currentDir/.vimrc;
@@ -58,6 +57,17 @@ if [ $# -eq 0 ]; then # save initial state of the config and perform configurati
 elif [ $# -eq 1 ]; then
   if [ "$1" == "-d" ]; then
     echo one arg, deleting plugins;
+    if [ -f $ftpluginName ]; then
+      rm $ftpluginName;
+    fi
+    # read old plugin names
+    # delete additional plugins
+
+    cd $workingDir;
+    rm .vimrc
+    if [ -f .vimrc.old ]; then
+      mv .vimrc.old .vimrc;
+    fi
   elif [ "$1" == "-u" ]; then
     echo one arg, updating plugins;
   fi
