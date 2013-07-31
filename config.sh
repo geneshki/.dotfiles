@@ -1,4 +1,9 @@
 #!/bin/bash
+containsElement () {
+  local e
+  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+    return 1
+}
 set -e; #if there are problems with the configuration - exit
 currentDir=$(pwd);
 destinationIsAbsolute=$( cat config.properties | set -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +1 | head -n 1);
@@ -51,6 +56,11 @@ if [ $# -eq 0 ]; then # save initial state of the config and perform configurati
 
   echo working directory path: $workingDir;
   cd $workingDir;
+  # check if another .vimrc is already present.
+  if [ -f .vimrc ]; then
+    mv .vimrc .vimrc.old; # save the old configuration to .vimrc.old for later use.
+  fi
+  # create .vimrc symlink.
   ln -s $currentDir/.vimrc;
   #echo Config SUCCESSFUL!
   exit
@@ -60,9 +70,27 @@ elif [ $# -eq 1 ]; then
     if [ -f $ftpluginName ]; then
       rm $ftpluginName;
     fi
-    # read old plugin names
-    # delete additional plugins
+    # get names of old plugins.
+    IFS=$'\r\n';
+    oldPlugins=( $(cat $currentDir/localPlugins.properties) );
+    unset IFS;
+    # delete additional plugins.
+    for plugin in $( find . -maxdepth 1 -mindepth 1 -type d | cat); do
+      # check if plugin does not exist in oldPlugins
+      isNewPlugin="true";
+      for e in "${oldPlugins[@]}"; do 
+        if [ "./$e" == "$plugin" ]; then
+          isNewPlugin="false";
+        fi
+      done
+      if [ "$isNewPlugin" == "true" ]; then
+        rm -r $plugin; # if it doesn't - delete it.
 
+      fi
+      # otherwise leave it be.
+    done
+    rm $ftpluginName;
+    # replace .vimrc with old version if exists. Otherwise just delete it.
     cd $workingDir;
     rm .vimrc
     if [ -f .vimrc.old ]; then
@@ -70,5 +98,25 @@ elif [ $# -eq 1 ]; then
     fi
   elif [ "$1" == "-u" ]; then
     echo one arg, updating plugins;
+    # get names of old plugins.
+    IFS=$'\r\n';
+    oldPlugins=( $(cat $currentDir/localPlugins.properties) );
+    unset IFS;
+    # update additional plugins.
+    for plugin in $( find . -maxdepth 1 -mindepth 1 -type d | cat); do
+      # check if plugin does not exist in oldPlugins
+      isNewPlugin="true";
+      for e in "${oldPlugins[@]}"; do 
+        if [ "./$e" == "$plugin" ]; then
+          isNewPlugin="false";
+        fi
+      done
+      if [ "$isNewPlugin" == "true" ]; then
+        # if it doesn't - update it.
+        cd $plugin;
+        git pull;
+      fi
+      # otherwise leave it be.
+    done
   fi
 fi
