@@ -1,9 +1,4 @@
 #!/bin/bash
-containsElement () {
-  local e
-  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
-    return 1
-}
 set -e; #if there are problems with the configuration - exit
 currentDir=$(pwd);
 destinationIsAbsolute=$( cat config.properties | set -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +1 | head -n 1);
