@@ -68,5 +68,13 @@ set listchars=eol:¬,tab:>-,trail:~
 " toggle list option
 nnoremap <leader>l :set list!<cr>
 
-set statusline+=[%{&fo}]
-set fo-=c
+" custom status line
+set statusline=%t, " tail of filename
+set statusline+=[%{&fo}], " format options
+set statusline+=%= " left right separator
+set statusline+=%c, " cursor column
+set statusline+=%l/%L " cursor line / total lines
+
+" format options
+set fo-=c " no auto-wrapping for comments
+set fo-=t " no auto-wrapping for text
