@@ -1,13 +1,12 @@
 " turn off compatibility
 set nocompatible
 
-" enable vim-pathogen 
+" enable vim-pathogen
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
 
-"execute pathogen#infect()
 " enabling syntax highlighting with default coloring
 syntax on
 
@@ -38,6 +37,7 @@ set expandtab
 " enable smart indent
 set smartindent
 set autoindent
+set nosmarttab
 
 " set textwidth and wrapmargin for battling unwanted wrapping which makes lines long.
 set textwidth=0
@@ -81,3 +81,7 @@ set statusline+=%l/%L " cursor line / total lines
 " format options
 set fo-=c " no auto-wrapping for comments
 set fo-=t " no auto-wrapping for text
+
+" Highlight Trailing Whitespace
+set list listchars=trail:~,tab:>.
+highlight SpecialKey ctermfg=DarkGray ctermbg=Black
