@@ -13,18 +13,24 @@ workingDir=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$
 if [ "$workingDirIsAbsolute" != "true" ]; then
   workingDir="$HOME$workingDir";
 fi
+#get the type of os - it's important, especially if the os is Windows
+osType=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +5 | head -n 1);
 # get the name of the filetype plugin
-ftpluginName=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +5 | head -n 1);
+ftpluginName=$( cat config.properties | sed -e '\_#.*_ d' -e 's/[ ^I]*$//' -e '/^$/ d' | tail -n +6 | head -n 1);
 echo $ftpluginName
 echo `[[ $ftpluginName =~ ^ftpluginName ]]`
 if [[ $ftpluginName =~ ^ftpluginName ]]; then
   echo there\'s a ftplugin;
   ftpluginName=`echo $ftpluginName| cut -d'=' -f 2`;
   echo $ftpluginName;
-  pluginsLineStart=6;
+  pluginsLineStart=7;
 else
   echo no ftplugin;
-  pluginsLineStart=5;
+  pluginsLineStart=6;
+fi
+vimrcFilename=.vimrc;
+if [ $osType == Windows ]; then
+  vimrcFilename=_vimrc;
 fi
 cd $destination;
 # take action according to the command line parameters.
@@ -52,11 +58,15 @@ if [ $# -eq 0 ]; then # save initial state of the config and perform configurati
   echo working directory path: $workingDir;
   cd $workingDir;
   # check if another .vimrc is already present.
-  if [ -f .vimrc ]; then
-    mv .vimrc .vimrc.old; # save the old configuration to .vimrc.old for later use.
+  if [ -f $vimrcFilename ]; then
+    mv $vimrcFilename $vimrcFilename.old; # save the old configuration to .vimrc.old for later use.
   fi
   # create .vimrc symlink.
-  ln -s $currentDir/.vimrc;
+  if [ $osType == Windows ]; then
+    mklink $currentDir/$vimrcFilename;
+  else
+    ln -s $currentDir/$vimrcFilename;
+  fi
   #echo Config SUCCESSFUL!
   exit
 elif [ $# -eq 1 ]; then
@@ -87,9 +97,9 @@ elif [ $# -eq 1 ]; then
     rm $ftpluginName;
     # replace .vimrc with old version if exists. Otherwise just delete it.
     cd $workingDir;
-    rm .vimrc
-    if [ -f .vimrc.old ]; then
-      mv .vimrc.old .vimrc;
+    rm $vimrcFilename;
+    if [ -f $vimrcFilename.old ]; then
+      mv $vimrcFilename.old $vimrcFilename;
     fi
   elif [ "$1" == "-u" ]; then
     echo one arg, updating plugins;
