@@ -68,8 +68,6 @@ highlight SpecialKey guifg=#4a4a59
 " as TextMate for tabstops and EOLs
 set listchars=eol:¬,tab:>-,trail:~
 
-" toggle list option
-nnoremap <leader>l :set list!<cr>
 
 " custom status line
 set statusline=%t, " tail of filename
@@ -83,5 +81,17 @@ set fo-=c " no auto-wrapping for comments
 set fo-=t " no auto-wrapping for text
 
 " Highlight Trailing Whitespace
-set list listchars=trail:~,tab:>.
 highlight SpecialKey ctermfg=DarkGray ctermbg=Black
+
+" Mappings
+let mapleader = ";"
+" toggle list option
+nnoremap <leader>l :set list!<cr>
+" switch active window
+map <Leader>w <C-w>w
+" save while in insert mode with CTRL-S
+inoremap <C-s> <esc>:w<cr>
+" save with CTRL-S in normal mode
+nnoremap <C-s> :w<cr>
+" avoid evil esc key
+inoremap <C-j> <esc>
