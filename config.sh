@@ -118,7 +118,6 @@ elif [ $# -eq 1 ]; then
       done
       if [ "$isNewPlugin" == "true" ]; then
         # if it doesn't - update it.
-        cd $plugin;
         git pull;
       fi
       # otherwise leave it be.

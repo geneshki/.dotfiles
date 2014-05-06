@@ -1,0 +1,1 @@
+inoremap JJ <Esc>o

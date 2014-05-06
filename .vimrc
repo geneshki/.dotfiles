@@ -83,10 +83,14 @@ set fo-=t " no auto-wrapping for text
 " Highlight Trailing Whitespace
 highlight SpecialKey ctermfg=DarkGray ctermbg=Black
 
+" add DBGPavim support
+let g:dbgPavimPort = 9009
+let g:dbgPavimBreakAtEntry = 0
+
 " Mappings
 let mapleader = ";"
 " toggle list option
-nnoremap <leader>l :set list!<cr>
+nnoremap <leader>a :set list!<cr>
 " switch active window
 map <Leader>w <C-w>w
 " save while in insert mode with CTRL-S
@@ -94,4 +98,9 @@ inoremap <C-s> <esc>:w<cr>
 " save with CTRL-S in normal mode
 nnoremap <C-s> :w<cr>
 " avoid evil esc key
-inoremap <C-j> <esc>
+inoremap jj <esc>
+" make buffer navigation a breeze. Warning: breaks when some buffer 
+" is a directory
+nnoremap <C-p> :bprevious<CR>
+nnoremap <C-n> :bnext<CR>
+inoremap <leader>w <esc>:w<CR>

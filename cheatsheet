@@ -12,3 +12,8 @@
 	"dap"	delete a paragraph			*dap*
 	"diB"	delete inner '{' '}' block		*diB*
 	"daB"	delete a '{' '}' block			*daB*
+
+  "C-F" page down
+  "C-B" page up
+  "C-D" half page down
+  "C-U" half page up
