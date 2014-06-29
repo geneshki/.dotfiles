@@ -35,7 +35,7 @@ set shiftwidth=2
 " use spaces instead of tabs
 set expandtab
 " enable smart indent
-set smartindent
+" set smartindent
 set autoindent
 set nosmarttab
 
