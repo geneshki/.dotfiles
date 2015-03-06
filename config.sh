@@ -27,7 +27,7 @@ else
   pluginsLineStart=4;
 fi
 vimrcFilename=.vimrc;
-if [ $osType =~ *Windows ]; then
+if [[ ! -z "$osType" && $osType =~ *Windows ]]; then
   vimrcFilename=_vimrc;
 fi
 cd $destination;
@@ -60,7 +60,7 @@ if [ -f $vimrcFilename ]; then
   mv $vimrcFilename $vimrcFilename.old; # save the old configuration to .vimrc.old for later use.
 fi
 # create .vimrc symlink.
-if [[ $osType =~ *Windows ]]; then
+if [[ ! -z "$osType" && $osType =~ *Windows ]]; then
   mklink $currentDir/$vimrcFilename;
 else
   ln -s $currentDir/$vimrcFilename;
@@ -116,7 +116,10 @@ elif [ $# -eq 1 ]; then
       done
       if [ "$isNewPlugin" == "true" ]; then
         # if it doesn't - update it.
+        echo pulling in directory: $plugin;
+        cd $plugin
         git pull;
+        cd -
       fi
       # otherwise leave it be.
     done

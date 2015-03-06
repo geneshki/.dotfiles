@@ -1,1 +1,1 @@
-let b:match_words .= ',{:},(:),[:],<:>'
+let b:match_words = ',{:},(:),[:],<:>'
