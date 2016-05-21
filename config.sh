@@ -59,13 +59,14 @@ cd $workingDir;
 if [ -f $vimrcFilename ]; then
   mv $vimrcFilename $vimrcFilename.old; # save the old configuration to .vimrc.old for later use.
 fi
-# create .vimrc symlink.
+# create symlinks.
 if [[ ! -z "$osType" && $osType =~ *Windows ]]; then
-  mklink $currentDir/$vimrcFilename;
+  mklink $currentDir/$vimrcFilename; # .vimrc
 else
-  ln -s $currentDir/$vimrcFilename;
+  ln -s $currentDir/$vimrcFilename; # .vimrc
+  ln -s $currentDir/.Xresources;
 fi
-#echo Config SUCCESSFUL!
+echo Config SUCCESSFUL!
 exit
 elif [ $# -eq 1 ]; then
   if [ "$1" == "-d" ]; then
