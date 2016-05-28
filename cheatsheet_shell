@@ -1,0 +1,4 @@
+# Network debugging:
+ip link
+ip link set <device> [up|down]
+netctl start <Profile>
