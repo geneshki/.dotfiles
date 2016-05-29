@@ -1,0 +1,6 @@
+keyboard:
+use the .dotfiles/kb-light.py script
+
+screen:
+1. load the asus-nb-wmi module if not loaded
+2. add kernel parameter "acpi_osi=" to /boot/loader/entries/arch.conf
