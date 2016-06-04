@@ -1,0 +1,9 @@
+install packages:
+cups
+hplip
+hplip-plugin(aur)
+
+run:
+hp-setup -i (requires python3, not python2 as people say in the Internet)
+
+troubleshout :)
