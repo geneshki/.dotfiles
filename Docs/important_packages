@@ -1,2 +1,6 @@
 fontconfig
 pulseaudio
+-- video
+bumblebee - install and enable service; for more details read 
+  https://wiki.archlinux.org/index.php/Bumblebee
+  https://github.com/Bumblebee-Project/Bumblebee
