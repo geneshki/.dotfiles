@@ -104,3 +104,5 @@ inoremap jj <esc>
 nnoremap <C-p> :bprevious<CR>
 nnoremap <C-n> :bnext<CR>
 inoremap <leader>w <esc>:w<CR>
+
+let maplocalleader = "'"
